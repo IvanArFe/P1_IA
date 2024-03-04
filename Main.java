@@ -26,8 +26,11 @@ public class Main {
     public static void main(String args[]){      
 
       // TODO: Declare map
+      Map map = new Map(OriginalCharMap);
 
       // TODO: Declare initial and target states
+      State initialState = new State(0,0);
+      State targetState = new State(9,9);
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
