@@ -1,17 +1,19 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class BestFirst extends Search{
     
     boolean found;
     List<State> handledStates;
-    PriorityQueue<State> pendingStates;
+    Queue<State> pendingStates;
 
     public BestFirst(float[][] costMap, Heuristic heuristic){
         super(costMap, heuristic);
         found = false;
         handledStates = new ArrayList<>();
-        pendingStates = new PriorityQueue<>();
+        pendingStates = new LinkedList<>();
     }
 
     @Override
