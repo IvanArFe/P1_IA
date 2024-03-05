@@ -27,6 +27,13 @@ public class State{
         return Integer.parseInt(posX+""+posY);
     }
 
+    public List<State> getChildren(){
+        List<State> children = new ArrayList<>();
+        children.add(new State(this.posX, this.posY+1)); /* First child */
+        children.add(new State(this.posX+1, this.posY)); /* Second child */
+        return children;
+    }
+
     public int getPosX() {
         return posX;
     }

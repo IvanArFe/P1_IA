@@ -1,5 +1,7 @@
 public class Main {
 
+    private int totalPrice, nDays;
+
     public static char[][] OriginalCharMap = {
       {'P','N','N','N','P','P','P','P','P','P'},
       {'P','N','N','N','M','M','P','P','N','P'},
