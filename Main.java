@@ -41,6 +41,7 @@ public class Main {
       heuristics[2] = Heuristics::Heuristic3;
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
+      Search bestFirst = new BestFirst(OriginalMap, heuristics[0]);
 
       // TODO: Run experiments
 

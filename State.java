@@ -1,17 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class State{
+public class State implements Comparable<State>{
     private int posX, posY;
-    List<String> path;
+    private float price, heuristciValue;
+    private List<State> path;
+    private State prevState;
 
     public State(int x, int y){
         this.posX = x; //Horizontal position.
         this.posY = y; //Vertical position.
+        this.heuristciValue = 0F;
+        this.price = 5F;
         this.path = new ArrayList<>();
+        this.prevState = new State(x, y);
     }
     
-
     @Override
     public boolean equals(Object other) {
         // TODO
@@ -25,13 +29,6 @@ public class State{
         *  However, due to collisions, two States with the same hashcode are not necessarily equal.  
         */
         return Integer.parseInt(posX+""+posY);
-    }
-
-    public List<State> getChildren(){
-        List<State> children = new ArrayList<>();
-        children.add(new State(this.posX, this.posY+1)); /* First child */
-        children.add(new State(this.posX+1, this.posY)); /* Second child */
-        return children;
     }
 
     public int getPosX() {
@@ -50,13 +47,44 @@ public class State{
         this.posY = posY;
     }
 
-    public List<String> getPath() {
+    public List<State> getPath() {
         return path;
     }
 
 
-    public void setPath(List<String> path) {
+    public void setPath(List<State> path) {
         this.path = path;
+    }
+
+    public float getHeuristciValue() {
+        return heuristciValue;
+    }
+
+    public void setHeuristciValue(float heuristciValue) {
+        this.heuristciValue = heuristciValue;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public State getPrevState() {
+        return prevState;
+    }
+
+    public void setPrevState(State prevState) {
+        this.prevState = prevState;
+    }
+
+    @Override
+    public int compareTo(State otherState) {
+        if(this.getHeuristciValue() > otherState.getHeuristciValue()){ return 1; }
+        else if(this.getHeuristciValue() < otherState.getHeuristciValue()) {return -1;}
+        return 0;
     }
     
 }
