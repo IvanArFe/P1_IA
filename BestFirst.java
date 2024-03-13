@@ -1,9 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class BestFirst extends Search{
     
@@ -21,7 +19,7 @@ public class BestFirst extends Search{
     @Override
     public List<State> DoSearch(State initialState, State targetState) {
         // TODO Auto-generated method stub
-        State actualState;
+        State actualState = null;
         pendingStates.add(initialState);
         List<State> solution = new ArrayList<State>();
         
@@ -37,13 +35,20 @@ public class BestFirst extends Search{
                     if(!handledStates.contains(child) && !pendingStates.contains(child)){ //If child is not handled
                         pendingStates.add(child);
                         child.setPrevState(actualState); //Set to child States the previous State
-                        Collections.sort(pendingStates);
+                        Collections.sort(pendingStates); // Order pending states according to heuristic value obtained
                     } 
                 }
                 handledStates.add(actualState);
             }
         }
-        if(found){ return solution; } //Return finalState.getPath() ?
+        if(found){ 
+            while(actualState.getPrevState() != null){
+                solution.add(actualState);
+                actualState = actualState.getPrevState();
+            } 
+            Collections.reverse(solution);
+            return solution;
+        } //Return finalState.getPath() ?
         else return null;
     }
 
@@ -51,26 +56,31 @@ public class BestFirst extends Search{
     protected List<State> EvaluateOperators(State currentState, State targetState, Heuristic chosenHeuristic) {
         List<State> children = new ArrayList<>();
         State child = null;
+        float[][] costMap = getCostMap();
 
         /* Check map limits to avoid IndexOutOfBondsException */
         if(currentState.getPosX() < 9){
             child = new State(currentState.getPosX()+1, currentState.getPosY());
             child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
+            child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()+1]);
             children.add(child); //Down
         }
         if(currentState.getPosY() < 9){
             child = new State(currentState.getPosX(), currentState.getPosY()+1);
             child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
+            child.setPrice(costMap[currentState.getPosY()+1][currentState.getPosX()]);
             children.add(child); //Right 
         }
         if(currentState.getPosX() > 0){
             child = new State(currentState.getPosX()-1, currentState.getPosY());
             child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
+            child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()-1]);
             children.add(child); //Up
         }
         if(currentState.getPosY() > 0){
             child = new State(currentState.getPosX(), currentState.getPosY()-1);
             child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
+            child.setPrice(costMap[currentState.getPosY()-1][currentState.getPosX()]);
             children.add(child); //Left
         }
 

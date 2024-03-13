@@ -1,6 +1,9 @@
+import java.util.*;
 public class Main {
 
-    private int totalPrice, nDays;
+    private static int totalPrice = 0;
+    private static int nDays = 0;
+    private static List<State> solution;
 
     public static char[][] OriginalCharMap = {
       {'P','N','N','N','P','P','P','P','P','P'},
@@ -41,12 +44,27 @@ public class Main {
       heuristics[2] = Heuristics::Heuristic3;
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
-      Search bestFirst = new BestFirst(OriginalMap, heuristics[0]);
+      Search bestFirst = new BestFirst(map.getCostMap(), heuristics[0]);
+      Search bestFirstV2 = new BestFirst(map.getCostMap(), heuristics[1]);
 
       // TODO: Run experiments
+      solution = bestFirst.DoSearch(initialState, targetState);
+      //solution = bestFirstV2.DoSearch(initialState, targetState);
 
       // TODO: Show results
+      System.out.println("--- RESULTS OBTAINED ---\n");
+      System.out.println("Path to solution: ");
+      for(int i = 0; i < solution.size()-1; i++){
+        System.out.print("( "+solution.get(i).getPosX()+" , "+solution.get(i).getPosY()+" ) ");
+        System.out.print("-> ");
+        totalPrice += solution.get(i).getPrice();
+        nDays++;
+      }
+      System.out.println();
+      System.out.println("TOTAL PRICE: "+totalPrice);
+      System.out.println("NUMBER OF DAYS: "+nDays);
     }
+
 }
 
 

@@ -13,12 +13,11 @@ public class State implements Comparable<State>{
         this.heuristciValue = 0F;
         this.price = 5F;
         this.path = new ArrayList<>();
-        this.prevState = new State(x, y);
+        this.prevState = null;
     }
     
     @Override
     public boolean equals(Object other) {
-        // TODO
         return (this.posX == ((State)other).getPosX()) && (this.posY == ((State)other).getPosY());
     }
 
@@ -28,7 +27,8 @@ public class State implements Comparable<State>{
         *  IMPORTANT: It MUST be coherent with the "equals" method. That is, if two States are equal, they MUST have the same hashcode.
         *  However, due to collisions, two States with the same hashcode are not necessarily equal.  
         */
-        return Integer.parseInt(posX+""+posY);
+        //return Integer.parseInt(posX+""+posY);
+        return this.hashCode();
     }
 
     public int getPosX() {
