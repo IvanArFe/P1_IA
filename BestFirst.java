@@ -43,13 +43,13 @@ public class BestFirst extends Search{
         }
         if(found){ 
             while(actualState.getPrevState() != null){
-                solution.add(actualState);
+                solution.add(actualState); /* Add all states to solution list */
                 actualState = actualState.getPrevState();
             } 
             Collections.reverse(solution);
             return solution;
-        } //Return finalState.getPath() ?
-        else return null;
+        } 
+        else return null; /* Return null if not found */
     }
 
     @Override

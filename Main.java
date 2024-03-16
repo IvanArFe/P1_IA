@@ -49,7 +49,7 @@ public class Main {
 
       // TODO: Run experiments
       solution = bestFirst.DoSearch(initialState, targetState);
-      //solution = bestFirstV2.DoSearch(initialState, targetState);
+      solution = bestFirstV2.DoSearch(initialState, targetState);
 
       // TODO: Show results
       System.out.println("--- RESULTS OBTAINED ---\n");
