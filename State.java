@@ -3,7 +3,7 @@ import java.util.List;
 
 public class State implements Comparable<State>{
     private int posX, posY;
-    private float price, heuristciValue;
+    private float price, heuristciValue, starPrice;
     private List<State> path;
     private State prevState;
 
@@ -14,6 +14,7 @@ public class State implements Comparable<State>{
         this.price = 5F;
         this.path = new ArrayList<>();
         this.prevState = null;
+        this.starPrice = 0F;
     }
     
     @Override
@@ -83,8 +84,16 @@ public class State implements Comparable<State>{
     @Override
     public int compareTo(State otherState) {
         if(this.getHeuristciValue() > otherState.getHeuristciValue()){ return 1; }
-        else if(this.getHeuristciValue() < otherState.getHeuristciValue()) {return -1;}
+        else if(this.getHeuristciValue() < otherState.getHeuristciValue()) { return -1;}
         return 0;
+    }
+
+    public float getStarPrice() {
+        return starPrice;
+    }
+
+    public void setStarPrice(float starPrice) {
+        this.starPrice = starPrice;
     }
     
 }

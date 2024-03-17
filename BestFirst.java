@@ -18,7 +18,6 @@ public class BestFirst extends Search{
 
     @Override
     public List<State> DoSearch(State initialState, State targetState) {
-        // TODO Auto-generated method stub
         State actualState = null;
         pendingStates.add(initialState);
         List<State> solution = new ArrayList<State>();
@@ -30,7 +29,7 @@ public class BestFirst extends Search{
                 found = true;
                 solution.add(actualState);
             } else {
-                List<State> children = EvaluateOperators(actualState, targetState, getHeuristic());
+                List<State> children = EvaluateOperators(actualState, targetState);
                 for(State child : children){
                     if(!handledStates.contains(child) && !pendingStates.contains(child)){ //If child is not handled
                         pendingStates.add(child);
@@ -53,7 +52,7 @@ public class BestFirst extends Search{
     }
 
     @Override
-    protected List<State> EvaluateOperators(State currentState, State targetState, Heuristic chosenHeuristic) {
+    protected List<State> EvaluateOperators(State currentState, State targetState) {
         List<State> children = new ArrayList<>();
         State child = null;
         float[][] costMap = getCostMap();
@@ -61,26 +60,30 @@ public class BestFirst extends Search{
         /* Check map limits to avoid IndexOutOfBondsException */
         if(currentState.getPosX() < 9){
             child = new State(currentState.getPosX()+1, currentState.getPosY());
-            child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
-            child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()+1]);
+            child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
+            //child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()+1]);
+            child.setStarPrice(costMap[currentState.getPosY()][currentState.getPosX()+1]);
             children.add(child); //Down
         }
         if(currentState.getPosY() < 9){
             child = new State(currentState.getPosX(), currentState.getPosY()+1);
-            child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
-            child.setPrice(costMap[currentState.getPosY()+1][currentState.getPosX()]);
+            child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
+            //child.setPrice(costMap[currentState.getPosY()+1][currentState.getPosX()]);
+            child.setStarPrice(costMap[currentState.getPosY()+1][currentState.getPosX()]);
             children.add(child); //Right 
         }
         if(currentState.getPosX() > 0){
             child = new State(currentState.getPosX()-1, currentState.getPosY());
-            child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
-            child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()-1]);
+            child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
+            //child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()-1]);
+            child.setStarPrice(costMap[currentState.getPosY()][currentState.getPosX()-1]);
             children.add(child); //Up
         }
         if(currentState.getPosY() > 0){
             child = new State(currentState.getPosX(), currentState.getPosY()-1);
-            child.setHeuristciValue(chosenHeuristic.Evaluate(child, targetState, getCostMap()));
-            child.setPrice(costMap[currentState.getPosY()-1][currentState.getPosX()]);
+            child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
+            //child.setPrice(costMap[currentState.getPosY()-1][currentState.getPosX()]);
+            child.setStarPrice(costMap[currentState.getPosY()-1][currentState.getPosX()]);
             children.add(child); //Left
         }
 

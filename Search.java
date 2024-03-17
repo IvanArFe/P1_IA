@@ -45,7 +45,7 @@ public abstract class Search {
          return null;
     }    
 
-    protected List<State> EvaluateOperators(State currentState, State targetState, Heuristic chosenHeuristic){
+    protected List<State> EvaluateOperators(State currentState, State targetState){
         /* TODO: Obtain the states that can be accessed from the current state.
          * Consider their cost, heuristic...
          * Feel free to change the input parameters and/or return type.
