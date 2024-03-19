@@ -25,7 +25,6 @@ public class AEstrella extends Search{
             pendingStates.remove(0);
             if(actualState.equals(targetState)){
                 found = true;
-                solution.add(actualState);
             } else {
                 List<State> children = EvaluateOperators(actualState, targetState);
                 for(State child : children){
@@ -46,6 +45,7 @@ public class AEstrella extends Search{
                 solution.add(actualState); /* Add all states to solution list */
                 actualState = actualState.getPrevState();
             } 
+            solution.add(new State(0, 0));
             Collections.reverse(solution);
             System.out.println("Handled States: "+handledStates.size());
             return solution;
@@ -64,7 +64,7 @@ public class AEstrella extends Search{
             child = new State(currentState.getPosX()+1, currentState.getPosY());
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
             child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()+1] + currentState.getPrice());
-            child.setStarPrice(child.getHeuristciValue() + child.getPrice());
+            child.setOrderValue(child.getHeuristciValue() + child.getPrice());
             child.setPrevState(currentState); //Set to child States the previous State
             children.add(child); //Down
         }
@@ -72,7 +72,7 @@ public class AEstrella extends Search{
             child = new State(currentState.getPosX(), currentState.getPosY()+1);
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
             child.setPrice(costMap[currentState.getPosY()+1][currentState.getPosX()] + currentState.getPrice());
-            child.setStarPrice(child.getHeuristciValue() + child.getPrice());
+            child.setOrderValue(child.getHeuristciValue() + child.getPrice());
             child.setPrevState(currentState); //Set to child States the previous State
             children.add(child); //Right 
         }
@@ -80,15 +80,15 @@ public class AEstrella extends Search{
             child = new State(currentState.getPosX()-1, currentState.getPosY());
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
             child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()-1] + currentState.getPrice());
-            child.setStarPrice(child.getHeuristciValue() + child.getPrice());
+            child.setOrderValue(child.getHeuristciValue() + child.getPrice());
             child.setPrevState(currentState); //Set to child States the previous State
             children.add(child); //Up
         }
         if(currentState.getPosY() > 0){
             child = new State(currentState.getPosX(), currentState.getPosY()-1);
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
-            child.setPrice(costMap[currentState.getPosY()-1][currentState.getPosX()] + currentState.getStarPrice());
-            child.setStarPrice(child.getHeuristciValue() + child.getPrice());
+            child.setPrice(costMap[currentState.getPosY()-1][currentState.getPosX()] + currentState.getPrice());
+            child.setOrderValue(child.getHeuristciValue() + child.getPrice());
             child.setPrevState(currentState); //Set to child States the previous State
             children.add(child); //Left
         }

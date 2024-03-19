@@ -1,10 +1,6 @@
 import java.util.*;
 public class Main {
 
-    private static float totalPrice = 0;
-    private static int nDays = 0;
-    private static List<State> sol, sol2, sol3, sol4;
-
     public static char[][] OriginalCharMap = {
       {'P','N','N','N','P','P','P','P','P','P'},
       {'P','N','N','N','M','M','P','P','N','P'},
@@ -20,11 +16,11 @@ public class Main {
     public static Map OriginalMap = new Map(OriginalCharMap);
 
     public static char[][] CustomCharMap = {
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
+      {'C','M','M','C','N'},
+      {'P','P','A','A','C'},
+      {'A','P','A','N','P'},
+      {'A','M','A','C','N'},
+      {'N','M','C','M','N'},
     };
     public static Map CustomMap = new Map(CustomCharMap);
 
@@ -32,10 +28,15 @@ public class Main {
 
       // TODO: Declare map
       float[][] map = OriginalMap.getCostMap();
+      float[][] custMap = CustomMap.getCostMap();
 
       // TODO: Declare initial and target states
       State initialState = new State(0,0);
-      State targetState = new State(9,9);
+      initialState.setPrice(2F);
+      State targetState = new State(map.length-1, map.length-1);
+      State targetStateCust = new State(custMap.length-1, custMap.length-1);
+      targetState.setPrice(0.5F);
+      targetStateCust.setPrice(0.5F);
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
@@ -65,6 +66,25 @@ public class Main {
         System.out.println("Number of days: "+solution.size());
         System.out.println("TOTAL PRICE: "+solution.get(solution.size()-1).getPrice()+" coins\n");
       }
+
+      System.out.println("--------- CUSTOM MAP ---------\n");
+
+      for(int i = 0; i < heuristics.length; i++){
+        BestFirst bFirst = new BestFirst(custMap, heuristics[i]);
+        List<State> solution = bFirst.DoSearch(initialState, targetStateCust);
+        System.out.println("BestFirst with Heuristic "+(i+1) + " has the following path: ");
+        System.out.println(solution.toString());
+        System.out.println("Number of days: "+solution.size());
+        System.out.println("TOTAL PRICE: "+solution.get(solution.size()-1).getPrice()+" coins\n");
+
+        AEstrella aStar = new AEstrella(custMap, heuristics[i]);
+        solution = aStar.DoSearch(initialState, targetStateCust);
+        System.out.println("aStar with Heuristic " + (i+1) + " has the following path: ");
+        System.out.println(solution.toString());
+        System.out.println("Number of days: "+solution.size());
+        System.out.println("TOTAL PRICE: "+solution.get(solution.size()-1).getPrice()+" coins\n");
+      }
+
     }
 }
 

@@ -1,6 +1,6 @@
 import java.lang.Math;
 public class Heuristics {
-    private static float result = 0;
+   
     public static float Heuristic1(State currentState, State targetState, float[][] map){
         /* TODO: Implement a heuristic 
          * You CANNOT change the input parameters and return type.
@@ -20,9 +20,6 @@ public class Heuristics {
 
         /* Based on cost of the substraction of the price of currentstate and targetstate */
         return currentState.getPrice()-targetState.getPrice();
-        /* Puedo justificarlo porque en caso de que el camino sea todo ciudades (o un costo así), mi heurística siempre dará un 
-         * valor menor o igual que este.
-         */
     }
 
     public static float Heuristic3(State currentState, State targetState, float[][] map){

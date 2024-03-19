@@ -1,19 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class State implements Comparable<State>{
     private int posX, posY;
-    private float price, heuristciValue, starPrice;
-    private List<State> path;
+    private float price, heuristciValue, orderValue;
     private State prevState;
 
     public State(int x, int y){
         this.posX = x; //Horizontal position.
         this.posY = y; //Vertical position.
         this.heuristciValue = 0F;
-        this.price = 2F;
+        this.price = 5F;
         this.prevState = null;
-        this.starPrice = 0F;
+        this.orderValue = 0F;
     }
     
     @Override
@@ -47,15 +44,6 @@ public class State implements Comparable<State>{
         this.posY = posY;
     }
 
-    public List<State> getPath() {
-        return path;
-    }
-
-
-    public void setPath(List<State> path) {
-        this.path = path;
-    }
-
     public float getHeuristciValue() {
         return heuristciValue;
     }
@@ -82,22 +70,22 @@ public class State implements Comparable<State>{
 
     @Override
     public int compareTo(State otherState) {
-        if(this.getStarPrice() > otherState.getStarPrice()){ return 1; }
-        else if(this.getStarPrice() < otherState.getStarPrice()) { return -1; }
+        if(this.getOrderValue() > otherState.getOrderValue()){ return 1; }
+        else if(this.getOrderValue() < otherState.getOrderValue()) { return -1; }
         else return 0;
     }
 
-    public float getStarPrice() {
-        return starPrice;
+    public float getOrderValue() {
+        return orderValue;
     }
 
-    public void setStarPrice(float starPrice) {
-        this.starPrice = starPrice;
+    public void setOrderValue(float orderValue) {
+        this.orderValue = orderValue;
     }
 
     @Override
     public String toString() {
-        return "("+ posX +"," + posY + ")";
+        return "("+ posY +"," + posX + ")";
     }
     
 }
