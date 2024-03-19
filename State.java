@@ -12,7 +12,6 @@ public class State implements Comparable<State>{
         this.posY = y; //Vertical position.
         this.heuristciValue = 0F;
         this.price = 2F;
-        this.path = new ArrayList<>();
         this.prevState = null;
         this.starPrice = 0F;
     }
@@ -20,6 +19,7 @@ public class State implements Comparable<State>{
     @Override
     public boolean equals(Object other) {
         return (this.posX == ((State)other).getPosX()) && (this.posY == ((State)other).getPosY());
+        //return (this.hashCode() == other.hashCode());
     }
 
     @Override
@@ -28,8 +28,7 @@ public class State implements Comparable<State>{
         *  IMPORTANT: It MUST be coherent with the "equals" method. That is, if two States are equal, they MUST have the same hashcode.
         *  However, due to collisions, two States with the same hashcode are not necessarily equal.  
         */
-        //return Integer.parseInt(posX+""+posY);
-        return this.hashCode();
+        return Integer.parseInt(posX+""+posY);
     }
 
     public int getPosX() {
@@ -94,6 +93,11 @@ public class State implements Comparable<State>{
 
     public void setStarPrice(float starPrice) {
         this.starPrice = starPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "("+ posX +"," + posY + ")";
     }
     
 }

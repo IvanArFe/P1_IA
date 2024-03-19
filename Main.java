@@ -31,7 +31,7 @@ public class Main {
     public static void main(String args[]){      
 
       // TODO: Declare map
-      Map map = new Map(OriginalCharMap);
+      float[][] map = OriginalMap.getCostMap();
 
       // TODO: Declare initial and target states
       State initialState = new State(0,0);
@@ -44,31 +44,28 @@ public class Main {
       heuristics[2] = Heuristics::Heuristic3;
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
-      Search bestFirst = new BestFirst(map.getCostMap(), heuristics[0]);
-      Search bestFirstV2 = new BestFirst(map.getCostMap(), heuristics[1]);
-      Search aStar1 = new AEstrella(map.getCostMap(), heuristics[0]);
-      Search aStar2 = new AEstrella(map.getCostMap(), heuristics[1]);
 
       // TODO: Run experiments
-      sol = bestFirst.DoSearch(initialState, targetState);
-      sol2 = bestFirstV2.DoSearch(initialState, targetState);
-      sol3 = aStar1.DoSearch(initialState, targetState);
-      sol4 = aStar2.DoSearch(initialState, targetState);
 
       // TODO: Show results
-      System.out.println("--- RESULTS OBTAINED ---\n");
-      System.out.println("Path to solution: ");
-      for(int i = 0; i < sol4.size()-1; i++){
-        System.out.print("( "+sol4.get(i).getPosY()+" , "+sol4.get(i).getPosX()+" ) ");
-        System.out.print("-> ");
-        totalPrice = sol4.get(sol4.size()-1).getPrice();
-        nDays++;
-      }
-      System.out.println();
-      System.out.println("TOTAL PRICE: "+totalPrice);
-      System.out.println("NUMBER OF DAYS: "+nDays);
-    }
+      System.out.println("--------- RESULTS OBTAINED ---------\n");
 
+      for(int i = 0; i < heuristics.length; i++){
+        BestFirst bFirst = new BestFirst(map, heuristics[i]);
+        List<State> solution = bFirst.DoSearch(initialState, targetState);
+        System.out.println("BestFirst with Heuristic "+(i+1) + " has the following path: ");
+        System.out.println(solution.toString());
+        System.out.println("Number of days: "+solution.size());
+        System.out.println("TOTAL PRICE: "+solution.get(solution.size()-1).getPrice()+" coins\n");
+
+        AEstrella aStar = new AEstrella(map, heuristics[i]);
+        solution = aStar.DoSearch(initialState, targetState);
+        System.out.println("aStar with Heuristic " + (i+1) + " has the following path: ");
+        System.out.println(solution.toString());
+        System.out.println("Number of days: "+solution.size());
+        System.out.println("TOTAL PRICE: "+solution.get(solution.size()-1).getPrice()+" coins\n");
+      }
+    }
 }
 
 

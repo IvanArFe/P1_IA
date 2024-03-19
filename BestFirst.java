@@ -46,6 +46,7 @@ public class BestFirst extends Search{
                 actualState = actualState.getPrevState();
             } 
             Collections.reverse(solution);
+            System.out.println("Handled States: "+handledStates.size());
             return solution;
         } 
         else return null; /* Return null if not found */
@@ -58,14 +59,14 @@ public class BestFirst extends Search{
         float[][] costMap = getCostMap();
 
         /* Check map limits to avoid IndexOutOfBondsException */
-        if(currentState.getPosX() < 9){
+        if(currentState.getPosX() < costMap.length-1){
             child = new State(currentState.getPosX()+1, currentState.getPosY());
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
             child.setPrice(costMap[currentState.getPosY()][currentState.getPosX()+1] + currentState.getPrice());
             child.setStarPrice(child.getHeuristciValue());
             children.add(child); //Down
         }
-        if(currentState.getPosY() < 9){
+        if(currentState.getPosY() < costMap.length-1){
             child = new State(currentState.getPosX(), currentState.getPosY()+1);
             child.setHeuristciValue(super.getHeuristic().Evaluate(currentState, targetState, costMap));
             child.setPrice(costMap[currentState.getPosY()+1][currentState.getPosX()] + currentState.getPrice());
@@ -86,9 +87,30 @@ public class BestFirst extends Search{
             child.setStarPrice(child.getHeuristciValue());
             children.add(child); //Left
         }
-
         return children;
     }
-    
-    
+
+    public boolean isFound() {
+        return found;
+    }
+
+    public void setFound(boolean found) {
+        this.found = found;
+    }
+
+    public List<State> getHandledStates() {
+        return handledStates;
+    }
+
+    public void setHandledStates(List<State> handledStates) {
+        this.handledStates = handledStates;
+    }
+
+    public List<State> getPendingStates() {
+        return pendingStates;
+    }
+
+    public void setPendingStates(List<State> pendingStates) {
+        this.pendingStates = pendingStates;
+    }
 }

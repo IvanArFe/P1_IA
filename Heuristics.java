@@ -17,8 +17,12 @@ public class Heuristics {
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
-        /* Based on cost of current state */
+
+        /* Based on cost of the substraction of the price of currentstate and targetstate */
         return currentState.getPrice()-targetState.getPrice();
+        /* Puedo justificarlo porque en caso de que el camino sea todo ciudades (o un costo así), mi heurística siempre dará un 
+         * valor menor o igual que este.
+         */
     }
 
     public static float Heuristic3(State currentState, State targetState, float[][] map){
@@ -26,6 +30,9 @@ public class Heuristics {
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
-        return result;
+        
+         /* Based on Manhattan distance */
+        return (float) Math.abs(targetState.getPosX() - currentState.getPosX()) + 
+            Math.abs(targetState.getPosY() - currentState.getPosY());
     }
 }
