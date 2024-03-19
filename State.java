@@ -11,7 +11,7 @@ public class State implements Comparable<State>{
         this.posX = x; //Horizontal position.
         this.posY = y; //Vertical position.
         this.heuristciValue = 0F;
-        this.price = 5F;
+        this.price = 2F;
         this.path = new ArrayList<>();
         this.prevState = null;
         this.starPrice = 0F;
@@ -83,9 +83,9 @@ public class State implements Comparable<State>{
 
     @Override
     public int compareTo(State otherState) {
-        if(this.getHeuristciValue() > otherState.getHeuristciValue()){ return 1; }
-        else if(this.getHeuristciValue() < otherState.getHeuristciValue()) { return -1;}
-        return 0;
+        if(this.getStarPrice() > otherState.getStarPrice()){ return 1; }
+        else if(this.getStarPrice() < otherState.getStarPrice()) { return -1; }
+        else return 0;
     }
 
     public float getStarPrice() {

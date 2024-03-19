@@ -18,7 +18,7 @@ public class Heuristics {
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
         /* Based on cost of current state */
-        return map[currentState.getPosY()][currentState.getPosX()];
+        return currentState.getPrice()-targetState.getPrice();
     }
 
     public static float Heuristic3(State currentState, State targetState, float[][] map){

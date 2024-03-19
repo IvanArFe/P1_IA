@@ -1,9 +1,9 @@
 import java.util.*;
 public class Main {
 
-    private static int totalPrice = 0;
+    private static float totalPrice = 0;
     private static int nDays = 0;
-    private static List<State> solution;
+    private static List<State> sol, sol2, sol3, sol4;
 
     public static char[][] OriginalCharMap = {
       {'P','N','N','N','P','P','P','P','P','P'},
@@ -46,18 +46,22 @@ public class Main {
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
       Search bestFirst = new BestFirst(map.getCostMap(), heuristics[0]);
       Search bestFirstV2 = new BestFirst(map.getCostMap(), heuristics[1]);
+      Search aStar1 = new AEstrella(map.getCostMap(), heuristics[0]);
+      Search aStar2 = new AEstrella(map.getCostMap(), heuristics[1]);
 
       // TODO: Run experiments
-      solution = bestFirst.DoSearch(initialState, targetState);
-      solution = bestFirstV2.DoSearch(initialState, targetState);
+      sol = bestFirst.DoSearch(initialState, targetState);
+      sol2 = bestFirstV2.DoSearch(initialState, targetState);
+      sol3 = aStar1.DoSearch(initialState, targetState);
+      sol4 = aStar2.DoSearch(initialState, targetState);
 
       // TODO: Show results
       System.out.println("--- RESULTS OBTAINED ---\n");
       System.out.println("Path to solution: ");
-      for(int i = 0; i < solution.size()-1; i++){
-        System.out.print("( "+solution.get(i).getPosX()+" , "+solution.get(i).getPosY()+" ) ");
+      for(int i = 0; i < sol4.size()-1; i++){
+        System.out.print("( "+sol4.get(i).getPosY()+" , "+sol4.get(i).getPosX()+" ) ");
         System.out.print("-> ");
-        totalPrice += solution.get(i).getPrice();
+        totalPrice = sol4.get(sol4.size()-1).getPrice();
         nDays++;
       }
       System.out.println();
